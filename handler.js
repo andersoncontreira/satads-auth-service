@@ -1,22 +1,16 @@
-const app = require("./app/app")
+const app = require('./app/app')
 
 module.exports.handler = function (event, context, callback) {
+  const customCallback = function (error, response) {
+    console.log('custom callback')
 
-    let customCallback = function (error, response) {
-        console.log('custom callback')
-
-        if (error) {
-
-            context.fail(error)
-
-        } else {
-
-            context.succeed(response)
-        }
-
-        callback(error, response)
-
+    if (error) {
+      context.fail(error)
+    } else {
+      context.succeed(response)
     }
-    app.execute(event, context, customCallback)
 
+    callback(error, response)
+  }
+  app.execute(event, context, customCallback)
 }

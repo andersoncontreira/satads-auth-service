@@ -7,6 +7,7 @@ const md5 = require('md5')
 const DbUtils = require('./../utils/db-utils')
 const ObjectUtils = require('./../utils/object-utils')
 const AuthValidator = require('./../validators/auth-validator')
+const EmailValidator = require('./../validators/email-validator')
 
 let authValidator = new AuthValidator()
 let attributes = require('../schemas/auth')
@@ -84,6 +85,13 @@ class AuthService {
   validate (authPayload) {
     let result = authValidator.validate(authPayload)
     this.errorMessage = authValidator.errorMessage
+    return result
+  }
+
+  validateEmail (authPayload) {
+    let emailValidator = new EmailValidator()
+    let result = emailValidator.validate(authPayload.email)
+    this.errorMessage = emailValidator.errorMessage
     return result
   }
 
@@ -195,8 +203,21 @@ class AuthService {
   }
 
   recover (authPayload) {
+    let recoverData = null
+    let self = null
     return new Promise(function (resolve, reject) {
-      resolve(null)
+      let getPromise = self.search('email', 'S', authPayload.email)
+      getPromise.then(function (response) {
+        // If not exists
+        if (!ObjectUtils.isEmpty(response)) {
+
+        } else {
+          self.errorMessage = `The email (${authPayload.email}) already registered`
+          reject(new Error(self.errorMessage))
+        }
+      }).catch(function (error) {
+
+      })
     })
   }
 

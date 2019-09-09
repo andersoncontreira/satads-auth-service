@@ -29,42 +29,42 @@ const defaultRoutes = require('./http/routes/default-routes')
 const authRoutes = require('./http/routes/v1/auth-routes')
 const router = new express.Router()
 
-let logRequest = (req, res, next) => {
+const logRequest = (req, res, next) => {
   console.log('request: ' + req.path)
   next()
 }
 
-let clientErrorHandler = (request, response, next) => {
+const clientErrorHandler = (request, response, next) => {
   response.status(404).send({ error: `Route ${request.path} not found` })
 }
 
 exports.execute = (event, context, callback) => {
   const app = express()
 
-    // Express Middleware
+  // Express Middleware
   app.use(express.json())
   app.use(bodyParser.urlencoded({ extended: true }))
 
-    // Custom middleware
-    // Register the request URI
+  // Custom middleware
+  // Register the request URI
   app.use(logRequest)
 
-    // CORS filter
+  // CORS filter
   app.use(corsMiddleware.filter)
-    // Add Headers
+  // Add Headers
   app.use(customHeadersMiddleware.apply)
 
-    // Routes
+  // Routes
   app.use(defaultRoutes.map(router))
   app.use(authRoutes.map(router))
 
-    // Print the routes
+  // Print the routes
   defaultRoutes.printRoutes(router)
 
-    // Error handler
+  // Error handler
   app.get('*', clientErrorHandler)
 
-    // lambda check
+  // lambda check
   const isInLambda = !!process.env.LAMBDA_TASK_ROOT
   if (isInLambda) {
     const binaryMimeTypes = [

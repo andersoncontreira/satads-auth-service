@@ -1,20 +1,19 @@
 const ApiResponse = require('./../../api-response')
 const AuthService = require('./../../../services/auth-service')
 
-let authService = new AuthService()
+const authService = new AuthService()
 
-/**
- *
- */
 class AuthController {
   /**
-   *
+   * SignIn method
+   * @param request
+   * @param response
    */
   static signIn (request, response) {
-    let apiResponse = new ApiResponse(request, response)
-    let authPayload = authService.factoryAuthPayloadObject(request.body)
+    const apiResponse = new ApiResponse(request, response)
+    const authPayload = authService.factoryAuthPayloadObject(request.body)
     if (authService.validate(authPayload)) {
-      let signIn = authService.signIn(authPayload)
+      const signIn = authService.signIn(authPayload)
       signIn.then((result) => {
         // filter result
         result.password = null
@@ -43,16 +42,17 @@ class AuthController {
       apiResponse.json()
     }
   }
+
   /**
    *
    */
   static signUp (request, response) {
-    let apiResponse = new ApiResponse(request, response)
+    const apiResponse = new ApiResponse(request, response)
 
-    let authPayload = authService.factoryAuthPayloadObject(request.body)
+    const authPayload = authService.factoryAuthPayloadObject(request.body)
 
     if (authService.validate(authPayload)) {
-      let creation = authService.signUp(authPayload)
+      const creation = authService.signUp(authPayload)
       creation.then((result) => {
         // filter data
         result.password = null
@@ -81,6 +81,55 @@ class AuthController {
       }
       apiResponse.json()
     }
+  }
+
+  /**
+   *
+   */
+  static recover (request, response) {
+    const apiResponse = new ApiResponse(request, response)
+    const authPayload = authService.factoryAuthPayloadObject(request.body)
+    if (authService.validateEmail(authPayload)) {
+      const recover = authService.recover(authPayload)
+      recover.then((result) => {
+        // filter result
+        result.password = null
+        apiResponse.body = {
+          result: true,
+          message: 'Recover success',
+          data: result
+        }
+
+        apiResponse.json()
+      }).catch((err) => {
+        console.error(err)
+        apiResponse.status(400)
+        apiResponse.body = {
+          result: false,
+          message: authService.getErrorMessage()
+        }
+        apiResponse.json()
+      })
+    } else {
+      apiResponse.status(400)
+      apiResponse.body = {
+        result: false,
+        message: authService.getErrorMessage()
+      }
+      apiResponse.json()
+    }
+  }
+
+  static recoverCallback (request, response) {
+    const apiResponse = new ApiResponse(request, response)
+
+    apiResponse.status(400)
+    apiResponse.body = {
+      result: false,
+      message: 'not implemented'
+    }
+
+    apiResponse.json()
   }
 }
 

@@ -1,7 +1,7 @@
 const EmailValidator = require('./email-validator')
 const ObjectUtils = require('./../utils/object-utils')
 
-let emailValidator = new EmailValidator()
+const emailValidator = new EmailValidator()
 
 class AuthValidator {
   constructor () {
