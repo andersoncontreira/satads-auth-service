@@ -9,11 +9,11 @@
     "dev": "nodemon server.js"
   },
   "devDependencies": {
-    "express": "^4.16.2",
     "nodemon": "^1.18.10",
     "standard": "^14.1.0"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "body-parser": "^1.18.2",
     "uuid": "^2.0.3",
     "aws-sdk": "^2.233.1",
