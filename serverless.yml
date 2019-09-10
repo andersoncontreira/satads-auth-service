@@ -73,21 +73,21 @@ functions:
     handler: handler.handler
 
 # you can add CloudFormation resource templates here
-resources:
-  Resources:
-    AuthDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: email
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: email
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+#resources:
+#  Resources:
+#    AuthDynamoDbTable:
+#      Type: 'AWS::DynamoDB::Table'
+#      DeletionPolicy: Retain
+#      Properties:
+#        AttributeDefinitions:
+#          -
+#            AttributeName: email
+#            AttributeType: S
+#        KeySchema:
+#          -
+#            AttributeName: email
+#            KeyType: HASH
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 5
+#          WriteCapacityUnits: 5
+#        TableName: ${self:provider.environment.DYNAMODB_TABLE}
