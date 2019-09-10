@@ -75,7 +75,7 @@ functions:
 # you can add CloudFormation resource templates here
 resources:
   Resources:
-    TodosDynamoDbTable:
+    AuthDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:
