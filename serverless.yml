@@ -73,22 +73,23 @@ functions:
   handler:
     handler: handler.handler
 
-# you can add CloudFormation resource templates here
-resources:
-  Resources:
-    AuthDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: email
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: email
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-        TableName: ${self:provider.environment.AUTH_DYNAMODB_TABLE}
+# https://stackoverflow.com/questions/41620437/how-to-continue-deploy-if-dynamodb-table-already-exists
+## you can add CloudFormation resource templates here
+#resources:
+#  Resources:
+#    AuthDynamoDbTable:
+#      Type: 'AWS::DynamoDB::Table'
+#      DeletionPolicy: Retain
+#      Properties:
+#        AttributeDefinitions:
+#          -
+#            AttributeName: email
+#            AttributeType: S
+#        KeySchema:
+#          -
+#            AttributeName: email
+#            KeyType: HASH
+#        ProvisionedThroughput:
+#          ReadCapacityUnits: 5
+#          WriteCapacityUnits: 5
+#        TableName: ${self:provider.environment.AUTH_DYNAMODB_TABLE}
