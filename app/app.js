@@ -44,6 +44,8 @@ const clientErrorHandler = (request, response, next) => {
 }
 
 exports.execute = (event, context, callback) => {
+  console.log('event', 'event')
+
   const app = express()
 
   // Express Middleware
