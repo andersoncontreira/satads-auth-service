@@ -16,7 +16,6 @@ const salt = 'auth-service-'
 class AuthPayload {
   constructor (data) {
     this.uuid = (data.hasOwnProperty('uuid')) ? data.uuid : ''
-    this.username = (data.hasOwnProperty('username')) ? slugify(data.username) : ''
     this.password = (data.hasOwnProperty('password')) ? data.password : ''
     this.firstName = (data.hasOwnProperty('firstName')) ? data.firstName : ''
     this.lastName = (data.hasOwnProperty('lastName')) ? data.lastName : ''
@@ -119,7 +118,6 @@ class AuthService {
             attributes.uuid.S = authPayload.uuid
             attributes.firstName.S = authPayload.firstName
             attributes.lastName.S = authPayload.lastName
-            attributes.username.S = authPayload.username
             attributes.password.S = generateHash(authPayload.password)
             attributes.email.S = authPayload.email
             attributes.createdAt.S = authPayload.createdAt
