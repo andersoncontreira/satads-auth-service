@@ -25,7 +25,7 @@ provider:
   region: sa-east-1
   # stage: dev
   environment:
-    DYNAMODB_TABLE: "satads-auth-${opt:stage, self:provider.stage}"
+    AUTH_DYNAMODB_TABLE: "satads-auth-${opt:stage, self:provider.stage}"
 
 
   # you can add statements to the Lambda function's IAM Role here
@@ -39,7 +39,7 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       # table for auth
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.AUTH_DYNAMODB_TABLE}"
 #  iamRoleStatements:
 #    - Effect: "Allow"
 #      Action:
@@ -90,4 +90,4 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+        TableName: ${self:provider.environment.AUTH_DYNAMODB_TABLE}
