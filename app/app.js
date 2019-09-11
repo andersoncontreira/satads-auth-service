@@ -1,4 +1,9 @@
 const packageConfig = require('../package')
+require('dotenv').config()
+
+if (typeof (process.env.ROOT_PATH) === 'undefined') {
+  process.env.ROOT_PATH = '/auth'
+}
 
 if (typeof (process.env.REGION) === 'undefined') {
   process.env.REGION = 'sa-east-1'

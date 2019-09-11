@@ -25,6 +25,7 @@ provider:
   region: sa-east-1
   # stage: dev
   environment:
+    ROOT_PATH: "/auth"
     AUTH_DYNAMODB_TABLE: "satads-auth-${opt:stage, self:provider.stage}"
 
 
